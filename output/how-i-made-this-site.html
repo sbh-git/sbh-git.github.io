@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>    How I Made This Site
+</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href='https://fonts.googleapis.com/css?family=Gentium+Book+Basic|Merriweather:400,300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/theme/css/cid.css">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+            <div class="container">
+
+<header class="blog-header">
+    <h1><a href="">sbh.fyi</a></h1>
+    <p></p>
+    <nav>
+        <a href="/">INDEX</a>
+        <a href="/archives">ARCHIVES</a>
+        <a href="/categories">CATEGORIES</a>
+    </nav>
+</header>
+
+    <div class="post">
+
+        <header>
+            <h1>How I Made This Site</h1>
+            <p class="date">Written on <time datetime="2024-08-18T00:00:00-04:00">Aug 18, 2024</time></p>
+        </header>
+
+        <article>
+            <h2>This site was made using the Pelican static site generator, and hosted on Github pages</h2>
+<p>It took a fair amount of trial-and-error to get this site live, so I thought I would post my process here for future reference, and in case it helps anyone else out.  Please note these are just the steps that I took to get the site going, and not necessarily the best or most optimal steps.  They are just what worked for me.</p>
+<h3>Initialize the site directory</h3>
+<ol>
+<li>
+<p>Choose a directory for the site to live in.  For me, it was
+<code>/home/sbh/Documents/Code/Website</code></p>
+</li>
+<li>
+<p>Open the directory in a text editor, which for me is Visual Studio Code.  Initialize a new python virtual environment for the directory.</p>
+</li>
+<li>
+<p>In the terminal, enter <code>pip install pelican markdown</code>.</p>
+</li>
+<li>
+<p>Then, enter <code>pelican-quickstart</code> in the terminal.  This will create a folder structure along with a few files for pelican within the directory.  These will be discussed below, but for now there are a couple more steps before the bare bones of the site is ready to publish.</p>
+</li>
+<li>
+<p>Create a sample article by creating a new Markdown file in the <code>content</code> folder.  I used the sample file suggested in the <a href="https://docs.getpelican.com/en/stable/quickstart.html#create-an-article">official documentation</a>.  Make sure you save this file (ctrl+S).</p>
+<blockquote>
+<p>Title: My First Review</p>
+<p>Date: 2010-12-03 10:20</p>
+<p>Category: Review</p>
+<p>Following is a review of my favorite mechanical keyboard.</p>
+</blockquote>
+</li>
+<li>
+<p>With pelican, any Markdown articles or pages posted to the <code>content</code> folder will be converted to html.  In order to perform this process, run the command <code>pelican content</code> in the terminal.  After doing so, you should see the test article appear as an html file in a new folder called <code>output</code>.  This <code>output</code> folder contains the actual pages of the site.</p>
+</li>
+<li>
+<p>Lastly, to preview the site, run the command <code>pelican --listen</code> and click the link to view the site locally.  Hit <code>ctrl+C</code> in the terminal to stop serving the site locally.</p>
+</li>
+</ol>
+<h4>The pelican folder structure</h4>
+<p>After completing step 4, the following folders will be present in the <code>Website</code> directory:
+* .venv/ - Contains the virtual environment</p>
+<ul>
+<li>
+<p>content/ - Add files to this folder to add pages and posts to the site</p>
+</li>
+<li>
+<p>output/ - Do not edit this folde; it will be deleted and recreated every time you run <code>pelican content</code></p>
+</li>
+<li>
+<p>pelicanconf.py - You can change several settings in this file in order to affect the website</p>
+</li>
+<li>
+<p>publishconf.py - This will rarely need to be changed</p>
+</li>
+<li>
+<p>tasks.py - This should not need to be changed</p>
+</li>
+</ul>
+<h3>Create repository and push repo to Github</h3>
+<p>Now that the bones of the site are creative, you need to create a remote repository in order to host the site on Github Pages.
+1. On github.com, create a new repository with using <code>github_username.github.io</code> as format for the repository name.</p>
+<ol>
+<li>
+<p>In the text editor, install the GitPython library by entering <code>pip install gitpython</code> into the terminal.</p>
+</li>
+<li>
+<p>Create a git repository within the <code>Website</code> directory by entering <code>git init</code> into the terminal.</p>
+</li>
+<li>
+<p>To create a remote repository (sync your local repository with the one created on github.com), enter <code>git remote add origin https://github.com/github_username/github_username.github.io</code> into the terminal.</p>
+</li>
+<li>
+<p>Each time you want to push a change to your website and make it live online, you will need to commit a new change the repository.  This first step of doing this is to enter <code>git add ./output</code> into the terminal.  To see what files you've staged to commit, you can enter <code>git status</code>.</p>
+</li>
+<li>
+<p>To actually commit your changes, enter <code>git commit -m 'your commit message'</code>.  For example, I entered <code>git commit -m 'Added Making Of Site article'</code>.</p>
+</li>
+<li>
+<p>Lastly, once you've committed a change to the repository, you will need to push the change to your remote repository using <code>git push</code>.  After this, you should be able to see your output files in your github.com repository.</p>
+</li>
+</ol>
+<h3>Make site live with Github Pages</h3>
+<p>Now that the site's files are successfully uploaded to github.com, the last step is to host them on github pages.  Admittedly this was very tricky for me and I used a lot of trial and error.</p>
+<ol>
+<li>
+<p>In the <code>Website</code> directory, create a text file titled <code>.nojekyll</code>.  Add this to the local repo, commit the change, and then use <code>git push</code> to push it to the remote repo.  I'm not sure how effective this step is.  I know Github Pages uses Jekyll by default and I'm not sure if that interferes with Pelican.  It's a step I saw many people take as I was researching how to build the site, so it's one I took as well.</p>
+</li>
+<li>
+<p>On github.com, and on the remote repository, go to the settings page, and then the pages section.  Deploy the site using Github Actions, selecting <code>Deploy static content to Pages</code> as the action.   Use the <code>output</code> folder as the source.  If this is successful, you shuld be able to go to <code>https://github_username.github.io</code> and view your site!</p>
+</li>
+</ol>
+<h3>Adding a custom domain</h3>
+<ol>
+<li>
+<p>To add a custom domain, list the domain in the box on the Pages section of the repository settings.  This should create a new CNAME file in your remote repository.  Don't delete this file!</p>
+</li>
+<li>
+<p>On the site where you purchased your domain name, add the following records:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Host</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A Record</td>
+<td>@</td>
+<td>185.199.108.153</td>
+</tr>
+<tr>
+<td>A Record</td>
+<td>@</td>
+<td>185.199.109.153</td>
+</tr>
+<tr>
+<td>A Record</td>
+<td>@</td>
+<td>185.199.110.153</td>
+</tr>
+<tr>
+<td>A Record</td>
+<td>@</td>
+<td>185.199.111.153</td>
+</tr>
+<tr>
+<td>CNAME Record</td>
+<td>www</td>
+<td>github_username.github.io</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Return to the Github Pages settings and refresh.  Wait for the "DNS Check In Progress" to complete successfully, and then check the Enforce HTTPS.</p>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>Though it was a frustrating process to work through at times during the initial setup, at the end of the day, using Pelican with Github pages is a really simple way to make a striking static site.  Once the inital setup is complete, adding new content is as simple as the following steps.  There is another important layer that involves changing and customizing the page's theme, but that's a story for another post, I think, as I am still figuring that part out.</p>
+<h4>To add new content</h4>
+<ol>
+<li>Create a new Markdown file in the <code>content</code> directory.</li>
+<li>Do <code>pelican content</code> to generate the new files for the output directory.</li>
+<li>Do <code>pelican --listen</code> to preview the site locally, and Ctrl+C to stop.</li>
+<li>Use <code>git add ./output</code>.</li>
+<li>Use <code>git commit -m "Commit message"</code></li>
+<li>Do <code>git push</code> to upload to github.com, and after a few minutes your new content should be available at the URL of your github repo, or your custom domain.</li>
+</ol>
+        </article>
+
+        <footer>
+            <p>This entry is posted in <a href="/category/coding.html">Coding</a>.</p>
+        </footer>
+
+
+    </div>
+
+
+<footer class="blog-footer">
+
+    <ul class="nav">
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/pages/about">About</a></li>
+            <li><a href="https://www.facebook.com/fbAcc">Facebook</a></li>
+            <li><a href="https://twitter.com/twttrAcc">Twitter</a></li>
+    </ul>
+
+    <p class="disclaimer">
+    Built with <a href="http://getpelican.com">Pelican</a>, and <a href="https://github.com/hdra/Pelican-Cid">Cid</a> theme.
+    </p>
+</footer>
+            </div>
+    </body>
+</html>
